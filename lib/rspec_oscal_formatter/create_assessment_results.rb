@@ -9,12 +9,16 @@ module RSpec
   module RSpecOscalFormatter
     # Creates an Assessment Result from an RSpec Unit Test Run
     class CreateAssessmentResult
-      def initialize(metadata)
+      attr_reader :assessment_result
+
+      def initialize(metadata, ap_filename)
         @assessment_result = Oscal::AssessmentResult::AssessmentResult.new(
-          uuid: Random.uuid,
-          metadata: build_metadata_block,
-          import_ap: { href: './exported_ap.json' }, # This is not correct. Should be dynamic.
-          results: create_results_block(metadata),
+          {
+            uuid: Random.uuid,
+            metadata: build_metadata_block,
+            import_ap: { href: ap_filename },
+            results: create_results_block(metadata)
+          }
         )
       end
 
@@ -23,7 +27,7 @@ module RSpec
           title: 'Test Result for login.gov.',
           last_modified: DateTime.now.iso8601,
           version: DateTime.now.iso8601,
-          oscal_version: '1.1.2',
+          oscal_version: '1.1.2'
         }
       end
 
@@ -36,7 +40,7 @@ module RSpec
           start: DateTime.now.iso8601,
           reviewed_controls: create_reviewed_controls(metadata),
           observations: [create_observations(metadata)],
-          findings: [create_findings(metadata)],
+          findings: [create_findings(metadata)]
         }]
       end
 
@@ -45,10 +49,10 @@ module RSpec
           control_selections: [
             {
               include_controls: [
-                { control_id: metadata.control_id },
-              ],
-            },
-          ],
+                { control_id: metadata.control_id }
+              ]
+            }
+          ]
         }
       end
 
@@ -58,7 +62,7 @@ module RSpec
           title: metadata.description,
           description: metadata.description,
           methods: ['TEST'],
-          collected: DateTime.now.iso8601,
+          collected: DateTime.now.iso8601
         }
       end
 
@@ -67,7 +71,7 @@ module RSpec
           uuid: Random.uuid,
           title: 'Automated Test Outcome',
           description: metadata.description,
-          target: create_target(metadata),
+          target: create_target(metadata)
         }
       end
 
@@ -77,17 +81,13 @@ module RSpec
           target_id: metadata.statement_id,
           status: {
             state: metadata.state,
-            reason: metadata.reason,
-          },
+            reason: metadata.reason
+          }
         }
       end
 
-      def get
-        @assessment_result
-      end
-
       def to_json(*_args)
-        @assessment_result.to_json
+        assessment_result.to_json
       end
     end
   end

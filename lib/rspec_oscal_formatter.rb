@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rspec/core'
+RSpec::Support.require_rspec_core 'formatters/base_formatter'
 require 'date'
 require 'pathname'
 
@@ -10,13 +11,30 @@ Dir[File.join(__dir__, 'rspec_oscal_formatter', '*.rb')].each { |file| require f
 module RSpec
   module RSpecOscalFormatter
     # Core class for the formatter
-    class Formatter
-      RSpec::Core::Formatters.register self, :example_finished, :close
+    class Formatter < Core::Formatters::BaseFormatter
+      RSpec::Core::Formatters.register self, :example_finished
 
-      attr_reader :output
+      class << self
+        attr_writer :output_directory, :use_timestamp_dirs
+
+        def use_timestamp_dirs?
+          !!@use_timestamp_dirs
+        end
+
+        def output_directory
+          if @output_directory.nil?
+            raise ArgumentError,
+                  'You must set RSpec::RSpecOscalFormatter::Formatter.output_directory before adding the formattter'
+          end
+
+          @output_directory
+        end
+      end
+      attr_reader :file_writer
 
       def initialize(output)
-        @output = output
+        @file_writer = FileWriter.new self.class.output_directory, self.class.use_timestamp_dirs?
+        super(output)
       end
 
       def example_finished(notification)
@@ -24,29 +42,22 @@ module RSpec
 
         return unless metadata.control_id.present?
 
-        output.open("#{metadata.control_id}-assessment-plan.json") do |f|
+        ap_filename = "#{metadata.control_id}-assessment-plan.json"
+        file_writer.open(ap_filename) do |f|
           f.write(CreateAssessmentPlan.new(metadata).to_json)
         end
 
-        output.open("#{metadata.control_id}-assessment-result.json") do |f|
-          f.write(CreateAssessmentResult.new(metadata).to_json)
+        file_writer.open("#{metadata.control_id}-assessment-result.json") do |f|
+          f.write(CreateAssessmentResult.new(metadata, ap_filename).to_json)
         end
-      end
-
-      def close(_)
-        return if output.closed?
-
-        output.puts
-        output.flush
       end
     end
 
-    class OutputWrapper < Core::OutputWrapper
+    class FileWriter
       attr_reader :output_directory
 
-      def initialize(directory, create_timestamp: false)
+      def initialize(directory, create_timestamp)
         @output_directory = create_output_directory(directory, create_timestamp)
-        super($stdout)
       end
 
       def open(filename, &block)

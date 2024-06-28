@@ -7,6 +7,8 @@ module RSpec
   module RSpecOscalFormatter
     # Create an assessment plan from the metadata and template
     class CreateAssessmentPlan
+      attr_reader :assessment_plan
+
       def initialize(metadata)
         @assessment_plan =
           Oscal::AssessmentPlan::AssessmentPlan.new(
@@ -14,8 +16,8 @@ module RSpec
               uuid: metadata.assessment_plan_uuid,
               metadata: build_ap_metadata_block(metadata),
               import_ssp: { href: './assessment_plan.json' },
-              reviewed_controls: make_reviewed_controls(metadata),
-            },
+              reviewed_controls: make_reviewed_controls(metadata)
+            }
           )
       end
 
@@ -24,7 +26,7 @@ module RSpec
           title: "Automated Testing Plan for login.gov. It #{metadata.description}",
           last_modified: DateTime.now.iso8601,
           version: DateTime.now.iso8601,
-          oscal_version: '1.1.2',
+          oscal_version: '1.1.2'
         }
       end
 
@@ -34,19 +36,15 @@ module RSpec
             include_controls: [
               {
                 control_id: metadata.control_id,
-                statement_ids: [metadata.statement_id],
-              },
-            ],
-          ],
+                statement_ids: [metadata.statement_id]
+              }
+            ]
+          ]
         }
       end
 
-      def get
-        @assessment_plan
-      end
-
       def to_json(*_args)
-        @assessment_plan.to_json
+        assessment_plan.to_json
       end
     end
   end
