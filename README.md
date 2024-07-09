@@ -2,9 +2,9 @@
 
 This Library provides an RSpec Formatter that helps you to define tests that align with OSCAL Catalogs and SSPs, and produce Assessment Plan and Assessment Result documents based on the test results.
 
-## Installation
+Original gem proof of concept can be found at https://github.com/Credentive-Sec/rspec_oscal_formatter
 
-Note that this library currently depends on a (temporary) fork of oscal-ruby that includes the artifacts we are interested. We hope to coordinate with that team to merge the codebase and move on to other projects.
+## Installation
 
 TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
@@ -20,7 +20,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 TODO: Write usage instructions here
 
-PLEASE SEE A [DEMO SPEC HERE](https://github.com/Credentive-Sec/rspec_oscal_formatter/blob/main/spec/demo_specs/demo_spec.rb) THAT GIVES AN OVERVIEW OF THE METADATA REQUIRED TO MAKE THIS WORK.
+PLEASE SEE A [DEMO SPEC HERE](https://github.com/GSA-TTS/rspec_oscal_formatter/blob/main/spec/demo_specs/demo_spec.rb) THAT GIVES AN OVERVIEW OF THE METADATA REQUIRED TO MAKE THIS WORK.
 
 ## Development
 
@@ -30,7 +30,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Credentive-Sec/rspec_oscal_formatter.
+Bug reports and pull requests are welcome on GitHub at https://github.com/GSA-TTS/rspec_oscal_formatter.
 
 ## License
 
