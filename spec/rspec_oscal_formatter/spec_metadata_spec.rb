@@ -21,8 +21,7 @@ RSpec.describe RSpecOscalFormatter::SpecMetadata do
     let(:metadata) do
       {
         control_id: 'sc-8.1',
-        statement_id: 'sc-8.1_smt',
-        assessment_plan_uuid: '20881534-c3ef-4bfc-ab0d-e866edb523b7'
+        statement_id: 'sc-8.1_smt'
       }
     end
 
@@ -60,7 +59,7 @@ RSpec.describe RSpecOscalFormatter::SpecMetadata do
     describe '#errors' do
       it 'returns the error messages' do
         subject.valid?
-        expect(subject.errors).to eq 'assessment_plan_uuid is missing, statement_id is missing'
+        expect(subject.errors).to eq 'statement_id is missing'
       end
     end
   end

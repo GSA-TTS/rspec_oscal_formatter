@@ -12,7 +12,7 @@ module RSpecOscalFormatter
       @assessment_plan =
         Oscal::AssessmentPlan::AssessmentPlan.new(
           {
-            uuid: metadata.assessment_plan_uuid,
+            uuid: RSpecOscalFormatter.configuration.assessment_plan_uuid,
             metadata: build_ap_metadata_block(metadata),
             import_ssp: { href: RSpecOscalFormatter.configuration.ssp_filename },
             reviewed_controls: make_reviewed_controls(metadata)

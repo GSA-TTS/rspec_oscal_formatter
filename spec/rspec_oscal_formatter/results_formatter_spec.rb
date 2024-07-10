@@ -28,7 +28,6 @@ RSpec.describe RSpecOscalFormatter::ResultsFormatter do
       let(:metadata) do
         {
           control_id: control_id,
-          assessment_plan_uuid: 'febd64ce-ff1b-4b6c-a6fa-a00ca19b7b74',
           statement_id: 'sc-8.1_smt'
         }
       end
