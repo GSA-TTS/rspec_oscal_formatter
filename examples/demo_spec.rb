@@ -1,12 +1,13 @@
 require 'rails_helper'
 require 'rspec'
 
+plan_filename = Pathname('/tmp/oscal/assessment-plan.json')
 RSpecOscalFormatter.configure do |config|
-  config.output_directory = Rails.root.join('tmp', 'oscal_assessment')
-  config.use_timestamp_dirs!
+  config.plan_filename = plan_filename
 end
 RSpec.configure do |config|
-  config.add_formatter RSpec::RSpecOscalFormatter::Formatter
+  config.add_formatter RSpecOscalFormatter::PlanFormatter, plan_filename
+  config.add_formatter RSpecOscalFormatter::ResultsFormatter, '/tmp/oscal/assessment-results.json'
 end
 
 RSpec.describe 'PasswordAssessment' do

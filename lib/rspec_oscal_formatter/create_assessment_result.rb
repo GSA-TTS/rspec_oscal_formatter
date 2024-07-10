@@ -10,12 +10,12 @@ module RSpecOscalFormatter
   class CreateAssessmentResult
     attr_reader :assessment_result
 
-    def initialize(metadata, ap_filename)
+    def initialize(metadata)
       @assessment_result = Oscal::AssessmentResult::AssessmentResult.new(
         {
           uuid: Random.uuid,
           metadata: build_metadata_block,
-          import_ap: { href: ap_filename },
+          import_ap: { href: RSpecOscalFormatter.configuration.plan_filename },
           results: create_results_block(metadata)
         }
       )
@@ -23,7 +23,7 @@ module RSpecOscalFormatter
 
     def build_metadata_block
       {
-        title: 'Test Result for login.gov.',
+        title: 'Automated Test Results.',
         last_modified: DateTime.now.iso8601,
         version: DateTime.now.iso8601,
         oscal_version: '1.1.2'

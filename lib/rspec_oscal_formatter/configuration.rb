@@ -3,22 +3,22 @@
 module RSpecOscalFormatter
   # Configuration - global formatter configuration
   class Configuration
-    attr_writer :output_directory
+    attr_writer :plan_filename, :ssp_filename
 
-    def output_directory
-      if @output_directory.nil?
-        raise ArgumentError,
-              'You must set RSpecOscalFormatter.configuration.output_directory before adding the formatter'
+    def plan_filename
+      if @plan_filename.nil?
+        './assessment-plan.json'
+      else
+        @plan_filename.to_s
       end
-      Pathname(@output_directory)
     end
 
-    def use_timestamp_dirs!
-      @use_timestamp_dirs = true
-    end
-
-    def use_timestamp_dirs?
-      !!@use_timestamp_dirs
+    def ssp_filename
+      if @ssp_filename.nil?
+        './system-security-plan.json'
+      else
+        @ssp_filename.to_s
+      end
     end
   end
 end
