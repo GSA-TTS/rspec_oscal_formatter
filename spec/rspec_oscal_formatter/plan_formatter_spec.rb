@@ -15,7 +15,8 @@ RSpec.describe RSpecOscalFormatter::PlanFormatter do
   end
   let(:example) do
     double('Example',
-           { metadata: metadata, full_description: description, execution_result: double(status: :passed) })
+           { metadata: metadata, location: __FILE__, full_description: description,
+             execution_result: double(status: :passed) })
   end
   let(:example_notification) { double('ExampleNotification', example: example) }
 
@@ -37,15 +38,16 @@ RSpec.describe RSpecOscalFormatter::PlanFormatter do
     end
   end
 
-  describe '#stop' do
-    let(:examples_notification) { double('ExamplesNotification') }
+  describe '#dump_summary' do
+    let(:summary_notification) { double('SummaryNotification') }
 
     before do
+      subject.start(double('StartNotification').as_null_object)
       subject.example_finished(example_notification)
     end
 
     it 'outputs the assessment plan' do
-      subject.stop(examples_notification)
+      subject.dump_summary(summary_notification)
       expect(output.string).not_to be_empty
     end
   end

@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     rspec_oscal_formatter (0.1.1)
+      method_source (~> 1.1)
       oscal (~> 0.2, >= 0.2.3)
       rspec-core (~> 3.13)
 
@@ -12,6 +13,7 @@ GEM
     diff-lcs (1.5.1)
     json (2.7.2)
     language_server-protocol (3.17.0.3)
+    method_source (1.1.0)
     oscal (0.2.3)
       yaml
     parallel (1.25.1)

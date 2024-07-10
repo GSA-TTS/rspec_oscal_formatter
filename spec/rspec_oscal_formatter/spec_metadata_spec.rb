@@ -5,7 +5,9 @@ require_relative '../spec_helper'
 RSpec.describe RSpecOscalFormatter::SpecMetadata do
   let(:description) { 'validates encryption in transit' }
   let(:example_notification) do
-    double('Example', { metadata: metadata, full_description: description, execution_result: double(status: :passsed) })
+    double('Example',
+           { metadata: metadata, full_description: description, location: __FILE__,
+             execution_result: double(status: :passed) })
   end
   subject { described_class.new example_notification }
 

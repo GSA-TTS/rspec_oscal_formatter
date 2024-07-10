@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
+  spec.add_dependency 'method_source', '~> 1.1'
   spec.add_dependency 'oscal', '~> 0.2', '>= 0.2.3'
   spec.add_dependency 'rspec-core', '~> 3.13'
 
