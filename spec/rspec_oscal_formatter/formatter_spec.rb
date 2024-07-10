@@ -2,12 +2,13 @@
 
 require_relative '../spec_helper'
 require 'tmpdir'
-require 'pathname'
 
 RSpec.describe RSpecOscalFormatter::Formatter do
   around(:each) do |example|
     Dir.mktmpdir do |tmp|
-      described_class.output_directory = Pathname.new(tmp)
+      RSpecOscalFormatter.configure do |c|
+        c.output_directory = Pathname(tmp)
+      end
       example.run
     end
   end
@@ -32,10 +33,9 @@ RSpec.describe RSpecOscalFormatter::Formatter do
 
     context 'with a control id' do
       let(:control_id) { 'sc-8.1' }
-      let(:assessment_plan_file) { File.join(described_class.output_directory, "#{control_id}-assessment-plan.json") }
-      let(:assessment_result_file) do
-        File.join(described_class.output_directory, "#{control_id}-assessment-result.json")
-      end
+      let(:output_directory) { RSpecOscalFormatter.configuration.output_directory }
+      let(:assessment_plan_file) { File.join(output_directory, "#{control_id}-assessment-plan.json") }
+      let(:assessment_result_file) { File.join(output_directory, "#{control_id}-assessment-result.json") }
       let(:metadata) do
         {
           control_id: control_id,

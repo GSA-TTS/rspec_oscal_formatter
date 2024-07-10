@@ -8,26 +8,10 @@ module RSpecOscalFormatter
   class Formatter < RSpec::Core::Formatters::BaseFormatter
     RSpec::Core::Formatters.register self, :example_finished
 
-    class << self
-      attr_writer :output_directory, :use_timestamp_dirs
-
-      def use_timestamp_dirs?
-        !!@use_timestamp_dirs
-      end
-
-      def output_directory
-        if @output_directory.nil?
-          raise ArgumentError,
-                'You must set RSpec::RSpecOscalFormatter::Formatter.output_directory before adding the formattter'
-        end
-
-        @output_directory
-      end
-    end
     attr_reader :file_writer
 
     def initialize(output = nil)
-      @file_writer = FileWriter.new self.class.output_directory, self.class.use_timestamp_dirs?
+      @file_writer = FileWriter.new
       super(output)
     end
 

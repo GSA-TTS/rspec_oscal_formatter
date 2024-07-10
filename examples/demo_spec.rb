@@ -1,8 +1,10 @@
 require 'rails_helper'
 require 'rspec'
 
-require_relative '../../lib/rspec_oscal_formatter/lib/rspec_oscal_formatter'
-
+RSpecOscalFormatter.configure do |config|
+  config.output_directory = Rails.root.join('tmp', 'oscal_assessment')
+  config.use_timestamp_dirs!
+end
 RSpec.configure do |config|
   config.add_formatter RSpec::RSpecOscalFormatter::Formatter
 end
