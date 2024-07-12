@@ -31,7 +31,7 @@ module RSpecOscalFormatter
 
     def build_include_controls
       grouped_examples.map do |cid, examples|
-        { control_id: cid, statement_ids: examples.flat_map(&:statement_ids).uniq }
+        {control_id: cid, statement_ids: examples.flat_map(&:statement_ids).uniq}
       end
     end
   end

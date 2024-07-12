@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'date'
-require 'oscal'
-require 'json'
+require "date"
+require "oscal"
+require "json"
 
 module RSpecOscalFormatter
   # Create an assessment plan from the metadata and template
@@ -19,14 +19,14 @@ module RSpecOscalFormatter
           {
             uuid: RSpecOscalFormatter.configuration.assessment_plan_uuid,
             metadata: build_ap_metadata_block,
-            import_ssp: { href: RSpecOscalFormatter.configuration.ssp_filename },
+            import_ssp: {href: RSpecOscalFormatter.configuration.ssp_filename},
             reviewed_controls: build_reviewed_controls
           }
         )
     end
 
     def to_json(*_args)
-      JSON.pretty_generate({ "assessment-plan": assessment_plan })
+      JSON.pretty_generate({"assessment-plan": assessment_plan})
     end
 
     private
@@ -36,7 +36,7 @@ module RSpecOscalFormatter
         title: RSpecOscalFormatter.configuration.plan_title,
         last_modified: DateTime.now.iso8601,
         version: DateTime.now.iso8601,
-        oscal_version: '1.1.2'
+        oscal_version: "1.1.2"
       }
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'securerandom'
+require "securerandom"
 
 module RSpecOscalFormatter
   # Configuration - global formatter configuration
@@ -12,19 +12,19 @@ module RSpecOscalFormatter
     end
 
     def plan_filename
-      (@plan_filename ||= './assessment-plan.json').to_s
+      (@plan_filename ||= "./assessment-plan.json").to_s
     end
 
     def plan_title
-      @plan_title ||= 'Automated Testing Plan'
+      @plan_title ||= "Automated Testing Plan"
     end
 
     def results_title
-      @results_title ||= 'Automated Testing Results'
+      @results_title ||= "Automated Testing Results"
     end
 
     def ssp_filename
-      (@ssp_filename ||= './system-security-plan.json').to_s
+      (@ssp_filename ||= "./system-security-plan.json").to_s
     end
   end
 end

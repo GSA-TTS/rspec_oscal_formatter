@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec::Support.require_rspec_core 'formatters/base_formatter'
+RSpec::Support.require_rspec_core "formatters/base_formatter"
 
 module RSpecOscalFormatter
   # Core ResultsFormatter class to output results

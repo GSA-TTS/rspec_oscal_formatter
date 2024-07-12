@@ -11,7 +11,7 @@ module RSpecOscalFormatter
 
     def start(notification)
       @assessment_started = RSpec::Core::Time.now
-      super(notification)
+      super
     end
 
     def example_finished(notification)

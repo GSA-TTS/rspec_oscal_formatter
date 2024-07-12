@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'date'
-require 'securerandom'
+require "date"
+require "securerandom"
 
-require 'oscal'
-require 'json'
+require "oscal"
+require "json"
 
 module RSpecOscalFormatter
   # Creates an Assessment Result from an RSpec Unit Test Run
@@ -24,14 +24,14 @@ module RSpecOscalFormatter
         {
           uuid: SecureRandom.uuid,
           metadata: build_metadata_block,
-          import_ap: { href: RSpecOscalFormatter.configuration.plan_filename },
+          import_ap: {href: RSpecOscalFormatter.configuration.plan_filename},
           results: [create_results_block]
         }
       )
     end
 
     def to_json(*_args)
-      JSON.pretty_generate({ "assessment-results": assessment_result.to_h })
+      JSON.pretty_generate({"assessment-results": assessment_result.to_h})
     end
 
     private
@@ -41,7 +41,7 @@ module RSpecOscalFormatter
         title: RSpecOscalFormatter.configuration.results_title,
         last_modified: DateTime.now.iso8601,
         version: DateTime.now.iso8601,
-        oscal_version: '1.1.2'
+        oscal_version: "1.1.2"
       }
     end
 
@@ -64,8 +64,8 @@ module RSpecOscalFormatter
           uuid: SecureRandom.uuid,
           title: title(metadata),
           description: "Test contents:\n```#{metadata.test_source}```",
-          methods: ['TEST'],
-          types: ['finding'],
+          methods: ["TEST"],
+          types: ["finding"],
           collected: start_time.iso8601,
           props: [test_source_prop(metadata)] + metadata.statement_ids.map do |sid|
                                                   finding_uuid_prop(metadata, sid)
@@ -76,9 +76,9 @@ module RSpecOscalFormatter
 
     def finding_uuid_prop(metadata, statement_id)
       {
-        'name' => 'Finding_UUID',
-        'value' => metadata.finding_uuid(statement_id),
-        'remarks' => statement_id
+        "name" => "Finding_UUID",
+        "value" => metadata.finding_uuid(statement_id),
+        "remarks" => statement_id
       }
     end
 
@@ -102,7 +102,7 @@ module RSpecOscalFormatter
 
     def create_target(metadata, statement_id)
       {
-        type: 'statement-id',
+        type: "statement-id",
         target_id: statement_id,
         status: {
           state: metadata.state,
@@ -114,8 +114,8 @@ module RSpecOscalFormatter
 
     def test_source_prop(metadata)
       {
-        'name' => 'Test_Source_Location',
-        'value' => metadata.location
+        "name" => "Test_Source_Location",
+        "value" => metadata.location
       }
     end
   end
