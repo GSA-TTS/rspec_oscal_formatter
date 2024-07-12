@@ -6,21 +6,25 @@ Original gem proof of concept can be found at https://github.com/Credentive-Sec/
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add rspec_oscal_formatter
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install rspec_oscal_formatter
 
 ## Usage
 
-TODO: Write usage instructions here
+See our [demo_spec.rb](./examples/demo_spec.rb) for a quick overview of how to use the formatters.
 
-PLEASE SEE A [DEMO SPEC HERE](https://github.com/GSA-TTS/rspec_oscal_formatter/blob/main/spec/demo_specs/demo_spec.rb) THAT GIVES AN OVERVIEW OF THE METADATA REQUIRED TO MAKE THIS WORK.
+See [the Configuration class](./lib/rspec_oscal_formatter/configuration.rb) for global configuration options.
+
+### Spec Metadata
+
+To invoke the Oscal Formatter, tests must include at least `control_id: ""` and `statement_id: ""` metadata tags. These can be given on either the `it` test or `describe` or `context` blocks.
+
+Optionally, pass `implementation_statement_uuid: 'YOUR_UUID'` to link the finding to the implementation.
 
 ## Development
 
