@@ -31,7 +31,7 @@ module RSpecOscalFormatter
     end
 
     def to_json(*_args)
-      JSON.pretty_generate(assessment_result.to_h)
+      JSON.pretty_generate({ "assessment-results": assessment_result.to_h })
     end
 
     private
