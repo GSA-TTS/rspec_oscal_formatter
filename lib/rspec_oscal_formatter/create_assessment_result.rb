@@ -67,9 +67,9 @@ module RSpecOscalFormatter
           methods: ["TEST"],
           types: ["finding"],
           collected: start_time.iso8601,
-          props: [test_source_prop(metadata)] + metadata.statement_ids.map do |sid|
-                                                  finding_uuid_prop(metadata, sid)
-                                                end
+          props: metadata.statement_ids.reduce(common_props(metadata)) do |props, sid|
+            props << finding_uuid_prop(metadata, sid)
+          end
         }
       end
     end
@@ -108,15 +108,20 @@ module RSpecOscalFormatter
           state: metadata.state,
           reason: metadata.reason
         },
-        props: [test_source_prop(metadata)]
+        props: common_props(metadata)
       }
     end
 
-    def test_source_prop(metadata)
-      {
+    def common_props(metadata)
+      metadata.rule_ids.reduce([{
         "name" => "Test_Source_Location",
         "value" => metadata.location
-      }
+      }]) do |props, rule|
+        props << {
+          "name" => "Rule_Id",
+          "value" => rule
+        }
+      end
     end
   end
 end

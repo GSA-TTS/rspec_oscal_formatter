@@ -24,7 +24,10 @@ See [the Configuration class](./lib/rspec_oscal_formatter/configuration.rb) for 
 
 To invoke the Oscal Formatter, tests must include at least `control_id: ""` and `statement_id: ""` metadata tags. These can be given on either the `it` test or `describe` or `context` blocks.
 
-Optionally, pass `implementation_statement_uuid: 'YOUR_UUID'` to link the finding to the implementation.
+There are a couple of optional metadata pieces you can pass:
+
+* `implementation_statement_uuid: 'YOUR_UUID'` to link the finding to the implementation.
+* `rule_ids: "rule"` or `rule_ids: ["rule1", "rule2", ...]` to link the finding to Rule_Id(s) from your imported component definitions
 
 ## Development
 

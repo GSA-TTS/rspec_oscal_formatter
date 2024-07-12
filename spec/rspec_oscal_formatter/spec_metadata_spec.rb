@@ -41,6 +41,30 @@ RSpec.describe RSpecOscalFormatter::SpecMetadata do
         expect(subject.errors).to eq ""
       end
     end
+
+    describe "#rule_ids" do
+      it "returns an empty array when metadata missing" do
+        expect(subject.rule_ids).to eq []
+      end
+
+      context "single rule_id" do
+        let(:rule) { "system-roles-needed" }
+        let(:metadata) { {rule_ids: rule} }
+
+        it "returns an array" do
+          expect(subject.rule_ids).to eq [rule]
+        end
+      end
+
+      context "multiple rules" do
+        let(:rules) { ["system-roles-needed", "app-account-management"] }
+        let(:metadata) { {rule_ids: rules} }
+
+        it "returns the array" do
+          expect(subject.rule_ids).to eq rules
+        end
+      end
+    end
   end
 
   context "with invalid oscal metadata" do
