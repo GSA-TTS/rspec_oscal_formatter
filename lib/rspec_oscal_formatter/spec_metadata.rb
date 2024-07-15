@@ -14,7 +14,7 @@ module RSpecOscalFormatter
       pending: "other"
     }.freeze
 
-    attr_reader :example, :control_id, :statement_ids, :reason, :state, :implementation_statement_uuid
+    attr_reader :example, :control_id, :statement_ids, :reason, :state, :implementation_statement_uuid, :rule_ids
 
     def_delegator :example, :full_description, :description
     def_delegators :example, :location, :inspect_output
@@ -24,6 +24,7 @@ module RSpecOscalFormatter
       @control_id = example.metadata[:control_id]
       @statement_ids = Array(example.metadata[:statement_id])
       @implementation_statement_uuid = example.metadata[:implementation_statement_uuid]
+      @rule_ids = Array(example.metadata[:rule_ids])
       @reason = STATUS_MAP[example.execution_result.status]
       @state = (@reason == "pass") ? "satisfied" : "not-satisfied"
     end
