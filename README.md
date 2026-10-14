@@ -22,7 +22,7 @@ See [the Configuration class](./lib/rspec_oscal_formatter/configuration.rb) for 
 
 ### Spec Metadata
 
-To invoke the Oscal Formatter, tests must include at least `control_id: ""` and `statement_id: ""` metadata tags. These can be given on either the `it` test or `describe` or `context` blocks.
+To invoke the Oscal Formatter, tests must include at least `control_id: ""` and either `statement_id: ""` or `objective_id: ""` metadata tags. These can be given on either the `it` test or `describe` or `context` blocks.
 
 There are a couple of optional metadata pieces you can pass:
 

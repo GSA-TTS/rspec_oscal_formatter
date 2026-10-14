@@ -50,5 +50,20 @@ RSpec.describe RSpecOscalFormatter::PlanFormatter do
       subject.dump_summary(summary_notification)
       expect(output.string).not_to be_empty
     end
+
+    context "with objective_id metadata" do
+      let(:metadata) do
+        {
+          control_id: control_id,
+          objective_id: "sc-8.1_obj"
+        }
+      end
+
+      it "outputs the assessment plan" do
+        subject.dump_summary(summary_notification)
+
+        expect(output.string).not_to be_empty
+      end
+    end
   end
 end

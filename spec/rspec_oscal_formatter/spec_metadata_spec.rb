@@ -85,7 +85,32 @@ RSpec.describe RSpecOscalFormatter::SpecMetadata do
     describe "#errors" do
       it "returns the error messages" do
         subject.valid?
-        expect(subject.errors).to eq "statement_id is missing"
+        expect(subject.errors).to eq "statement_id or objective_id is missing"
+      end
+    end
+  end
+
+  context "with objective_id metadata" do
+    let(:metadata) do
+      {
+        control_id: "sc-8.1",
+        objective_id: "sc-8.1_obj"
+      }
+    end
+
+    describe "#valid?" do
+      it { expect(subject).to be_valid }
+    end
+
+    describe "#objective_ids" do
+      it "returns an array" do
+        expect(subject.objective_ids).to eq ["sc-8.1_obj"]
+      end
+    end
+
+    describe "#target_references" do
+      it "includes objective targets" do
+        expect(subject.target_references).to eq [{type: "objective-id", id: "sc-8.1_obj"}]
       end
     end
   end

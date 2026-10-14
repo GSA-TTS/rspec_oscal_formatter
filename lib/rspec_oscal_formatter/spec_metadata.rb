@@ -14,7 +14,7 @@ module RSpecOscalFormatter
       pending: "other"
     }.freeze
 
-    attr_reader :example, :control_id, :statement_ids, :reason, :state, :implementation_statement_uuid, :rule_ids
+    attr_reader :example, :control_id, :statement_ids, :objective_ids, :reason, :state, :implementation_statement_uuid, :rule_ids
 
     def_delegator :example, :full_description, :description
     def_delegators :example, :location, :inspect_output
@@ -23,6 +23,7 @@ module RSpecOscalFormatter
       @example = example
       @control_id = example.metadata[:control_id]
       @statement_ids = Array(example.metadata[:statement_id])
+      @objective_ids = Array(example.metadata[:objective_id])
       @implementation_statement_uuid = example.metadata[:implementation_statement_uuid]
       @rule_ids = Array(example.metadata[:rule_ids])
       @reason = STATUS_MAP[example.execution_result.status]
@@ -36,7 +37,7 @@ module RSpecOscalFormatter
     def valid?
       @errors = []
       @errors << "control_id is missing" if nil_or_empty?(control_id)
-      @errors << "statement_id is missing" if nil_or_empty?(statement_ids)
+      @errors << "statement_id or objective_id is missing" if target_references.empty?
       @errors << "reason was invalid" if nil_or_empty?(reason)
       @errors.empty?
     end
@@ -53,6 +54,12 @@ module RSpecOscalFormatter
     def finding_uuid(statement_id)
       @finding_uuid_map ||= Hash.new { |h, k| h[k] = SecureRandom.uuid }
       @finding_uuid_map[statement_id]
+    end
+
+    def target_references
+      @target_references ||=
+        statement_ids.map { |statement_id| {type: "statement-id", id: statement_id} } +
+        objective_ids.map { |objective_id| {type: "objective-id", id: objective_id} }
     end
 
     private

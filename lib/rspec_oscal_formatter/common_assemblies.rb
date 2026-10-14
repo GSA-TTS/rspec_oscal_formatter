@@ -10,12 +10,10 @@ module RSpecOscalFormatter
     end
 
     def build_reviewed_controls
-      {
-        control_selections: [
-          description: build_selection_description,
-          include_controls: build_include_controls
-        ]
-      }
+      {control_selections: [
+        description: build_selection_description,
+        include_controls: build_include_controls
+      ]}
     end
 
     def build_selection_description
@@ -31,7 +29,11 @@ module RSpecOscalFormatter
 
     def build_include_controls
       grouped_examples.map do |cid, examples|
-        {control_id: cid, statement_ids: examples.flat_map(&:statement_ids).uniq}
+        control = {control_id: cid}
+        statement_ids = examples.flat_map(&:statement_ids).uniq
+        control[:statement_ids] = statement_ids unless statement_ids.empty?
+
+        control
       end
     end
   end

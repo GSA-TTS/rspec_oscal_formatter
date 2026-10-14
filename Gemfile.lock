@@ -3,7 +3,7 @@ PATH
   specs:
     rspec_oscal_formatter (0.2.0)
       method_source (~> 1.1)
-      oscal (~> 0.2, >= 0.2.3)
+      oscal (~> 0.2.3)
       rspec-core (~> 3.13)
 
 GEM

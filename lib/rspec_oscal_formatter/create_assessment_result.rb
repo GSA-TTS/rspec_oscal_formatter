@@ -67,8 +67,8 @@ module RSpecOscalFormatter
           methods: ["TEST"],
           types: ["finding"],
           collected: start_time.iso8601,
-          props: metadata.statement_ids.reduce(common_props(metadata)) do |props, sid|
-            props << finding_uuid_prop(metadata, sid)
+          props: metadata.target_references.reduce(common_props(metadata)) do |props, target|
+            props << finding_uuid_prop(metadata, target[:id])
           end
         }
       end
@@ -84,12 +84,12 @@ module RSpecOscalFormatter
 
     def create_findings
       examples.flat_map do |metadata|
-        metadata.statement_ids.map do |statement_id|
+        metadata.target_references.map do |target|
           {
-            uuid: metadata.finding_uuid(statement_id),
+            uuid: metadata.finding_uuid(target[:id]),
             title: title(metadata),
             description: "#{metadata.control_id}: #{metadata.inspect_output}",
-            target: create_target(metadata, statement_id),
+            target: create_target(metadata, target),
             implementation_statement_uuid: metadata.implementation_statement_uuid
           }.compact
         end
@@ -100,10 +100,10 @@ module RSpecOscalFormatter
       "#{metadata.control_id}: #{metadata.description}"
     end
 
-    def create_target(metadata, statement_id)
+    def create_target(metadata, target)
       {
-        type: "statement-id",
-        target_id: statement_id,
+        type: target[:type],
+        target_id: target[:id],
         status: {
           state: metadata.state,
           reason: metadata.reason
